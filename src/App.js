@@ -77,7 +77,7 @@ const App = () => {
         </div>
         <div className="secodnchild">
           <div className="char_len">
-            <p>charater length</p>
+            <p>character length</p>
             <p>{length}</p>
           </div>
           <div className="range">
