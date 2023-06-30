@@ -8,7 +8,7 @@ const GeneratePassword = (length, uppercase, numbers, symbols) => {
     Filtercharset += "0123456789";
   }
   if (symbols) {
-    Filtercharset += "^&*!@#$%()-[]{}";
+    Filtercharset += "^&*!@#$%()";
   }
   const fullCharset = charset + Filtercharset;
 

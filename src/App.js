@@ -6,6 +6,7 @@ const App = () => {
   const [uppercase, SetUppercase] = useState(false);
   const [numbers, setNumbers] = useState(false);
   const [symbols, setSymbols] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleRange = (e) => {
     setLength(Number(e.target.value));
@@ -20,6 +21,7 @@ const App = () => {
     );
     setPassword(generatedPassword);
     navigator.clipboard.writeText(generatedPassword);
+    CalcPasswordStrength(generatedPassword);
   };
 
   const handleFilter = (e) => {
@@ -34,12 +36,40 @@ const App = () => {
     }
   };
 
+  const CalcPasswordStrength = (password) => {
+    const checkUppercase = /[A-Z]/.test(password);
+    const checkLowercase = /[a-z]/.test(password);
+    const checkNumber = /\d/.test(password);
+    const checkSymbol = /[!@#$%^&*()]/.test(password);
+    const minLength = 8;
+
+    let strength = 0;
+
+    if (password.length >= minLength) {
+      strength++;
+    }
+    if (checkUppercase) {
+      strength++;
+    }
+    if (checkLowercase) {
+      strength++;
+    }
+    if (checkNumber) {
+      strength++;
+    }
+    if (checkSymbol) {
+      strength++;
+    }
+
+    setPasswordStrength(strength);
+  };
+
   return (
     <div className="main_container">
       <div className="parent_div">
         <h3>Password Generator</h3>
         <div className="pass_copy">
-          <p>{password}</p>
+          <p>{password || "Genreate Password"}</p>
           <i
             className="fas fa-copy cpysvg"
             onClick={() => navigator.clipboard.writeText(password)}
@@ -87,6 +117,41 @@ const App = () => {
                 onChange={handleFilter}
               />
               <span>include symbols</span>
+            </div>
+          </div>
+          <div className="strength">
+            <p>strength</p>
+            <div className="strenghcheck">
+              <span
+                style={{
+                  backgroundColor:
+                    passwordStrength >= 1 ? "green" : "transparent",
+                }}
+              ></span>
+              <span
+                style={{
+                  backgroundColor:
+                    passwordStrength >= 2 ? "green" : "transparent",
+                }}
+              ></span>
+              <span
+                style={{
+                  backgroundColor:
+                    passwordStrength >= 3 ? "green" : "transparent",
+                }}
+              ></span>
+              <span
+                style={{
+                  backgroundColor:
+                    passwordStrength >= 4 ? "green" : "transparent",
+                }}
+              ></span>
+              <span
+                style={{
+                  backgroundColor:
+                    passwordStrength >= 5 ? "green" : "transparent",
+                }}
+              ></span>
             </div>
           </div>
           <button className="generate" onClick={handleGeneratePass}>
